@@ -1,0 +1,27 @@
+{
+  "name": "abi",
+  "version": "0.0.1",
+  "description": "an app-based AI for you and me",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": "https://github.com/mmarkman/abi",
+  "keywords": [
+    "AI",
+    "assistant",
+    "voice",
+    "open source",
+    "free",
+    "Siri"
+  ],
+  "author": "mmarkman",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url" : "https://github.com/mmarkman/abi/issues"
+  },
+  "devDependencies": {
+    "electron": "^1.4.3",
+    "node-jsx": "^0.13.3"
+  }
+}
