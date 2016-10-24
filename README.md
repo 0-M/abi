@@ -4,7 +4,7 @@
 
 ## To learn more:
 
-- [`hopes-and-dreams.md`](https://github.com/electron/electron-quick-start) is a list of this project's goals
+- [`hopes-and-dreams.md`](https://github.com/mmarkman/abi/blob/master/hopes-and-dreams.md) is a list of this project's goals
 
 
 ## Components:
