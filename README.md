@@ -9,8 +9,8 @@
 
 ## Components:
 
-- [CMUSphinx](http://cmusphinx.sourceforge.net/)
-- [Electron](http://electron.atom.io/)
+- [Electron Desktop App Framework](http://electron.atom.io/)
+- [Jasper AI Assistant](https://github.com/jasperproject/jasper-client)
 
 ## TO DO:
 - Phase 1 from [hopes & dreams](https://github.com/electron/electron-quick-start)
