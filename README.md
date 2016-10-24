@@ -5,6 +5,7 @@
 ## To learn more:
 
 - [`hopes-and-dreams.md`](https://github.com/mmarkman/abi/blob/master/hopes-and-dreams.md) is a list of this project's goals
+- [`architecture.md`](https://github.com/mmarkman/abi/blob/master/architecture.md) is how I plan to achieve the hopes & dreams 
 
 
 ## Components:
