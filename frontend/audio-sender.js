@@ -1,6 +1,8 @@
 
 var net = require('net');
 
+const nodeWav = require("node-wav");
+
 var recorder = null;
 var volume = null;
 var audioInput = null;
@@ -85,7 +87,14 @@ function writeUTFBytes(view, offset, string){
   }
 }
 
-function createAudioBuffer(leftchannel, rightchannel) {
+function createAudioBuffer(leftchannel, rightchannel, sampleRate) {
+
+  var channelData = [leftchannel, rightchannel];
+
+  return nodeWav.encode(channelData, { sampleRate: 44100, float: true, bitDepth: 32 });
+
+
+  /*
   // we flat the left and right channels down
   var leftBuffer = mergeBuffers ( leftchannel, bufferSize );
   var rightBuffer = mergeBuffers ( rightchannel, bufferSize );
@@ -122,10 +131,9 @@ function createAudioBuffer(leftchannel, rightchannel) {
       view.setInt16(index, interleaved[i] * (0x7FFF * volume), true);
       index += 2;
   }
-
   // our final binary blob
   //var blob = new Blob ( [ view ], { type : 'audio/wav' } );
-  return Buffer.from(view.buffer);
+  return Buffer.from(view.buffer);*/
 }
 
 var audioSocket;
