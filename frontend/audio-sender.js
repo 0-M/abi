@@ -1,6 +1,5 @@
 
 var net = require('net');
-
 const nodeWav = require("node-wav");
 
 var recorder = null;
@@ -11,7 +10,7 @@ var audioContext = null;
 var context = null;
 var outputElement = document.getElementById('output');
 var outputString;
-var bufferSize = 2048;
+var bufferSize = 1024;
 
 var mediaSourceIn;
 
@@ -87,58 +86,35 @@ function writeUTFBytes(view, offset, string){
   }
 }
 
-function createAudioBuffer(leftchannel, rightchannel, sampleRate) {
+function createAudioBuffer(leftchannel, rightchannel) {
 
-  var channelData = [leftchannel, rightchannel];
-
-  return nodeWav.encode(channelData, { sampleRate: 44100, float: true, bitDepth: 32 });
-
-
-  /*
   // we flat the left and right channels down
   var leftBuffer = mergeBuffers ( leftchannel, bufferSize );
   var rightBuffer = mergeBuffers ( rightchannel, bufferSize );
+
   // we interleave both channels together
   var interleaved = interleave ( leftBuffer, rightBuffer );
 
   // we create our wav file
-  var buffer = new ArrayBuffer(44 + interleaved.length * 2);
+  var buffer = new ArrayBuffer(interleaved.length * 2);
   var view = new DataView(buffer);
-
-  // RIFF chunk descriptor
-  writeUTFBytes(view, 0, 'RIFF');
-  view.setUint32(4, 44 + interleaved.length * 2, true);
-  writeUTFBytes(view, 8, 'WAVE');
-  // FMT sub-chunk
-  writeUTFBytes(view, 12, 'fmt ');
-  view.setUint32(16, 16, true);
-  view.setUint16(20, 1, true);
-  // stereo (2 channels)
-  view.setUint16(22, 2, true);
-  view.setUint32(24, sampleRate, true);
-  view.setUint32(28, sampleRate * 4, true);
-  view.setUint16(32, 4, true);
-  view.setUint16(34, 16, true);
-  // data sub-chunk
-  writeUTFBytes(view, 36, 'data');
-  view.setUint32(40, interleaved.length * 2, true);
 
   // write the PCM samples
   var lng = interleaved.length;
-  var index = 44;
-  var volume = 1;
+  var index = 0;
+  //var index = 44;
+  var volume = 0.6;
   for (var i = 0; i < lng; i++){
       view.setInt16(index, interleaved[i] * (0x7FFF * volume), true);
       index += 2;
   }
   // our final binary blob
-  //var blob = new Blob ( [ view ], { type : 'audio/wav' } );
-  return Buffer.from(view.buffer);*/
+  return Buffer.from(view.buffer);
 }
 
 var audioSocket;
 function initSocket() {
-  audioSocket = net.connect('/tmp/abi_audio_input', connected)
+  audioSocket = net.connect('/tmp/audio_input', connected)
   .catch(function(err) {
     console.log("Could not connect...");
     console.log(err);
@@ -146,35 +122,17 @@ function initSocket() {
 }
 
 function connected() {
-  console.log("YOUR UNIX SOCKET HAS SUCCESSFULLY BEEN CONNECTED TO!");
+  console.log("CONNECTED TO UNIX SOCKET!");
   audioSocket = this;
   createRecordingTask();
 }
 
 function upload(thatAudio) {
-
   if (audioSocket.writable) {
-    console.log("sending...");
     audioSocket.write(thatAudio);
   } else {
-    console.log("DAT SHIT AINT WRITABLE");
+    console.log("DISCONNECTED!");
   }
-
-  /*
-  var xhr = new XMLHttpRequest();
-  xhr.open('POST', './upload.php', true);
-  xhr.onload = function(e) {};
-  // Listen to the upload progress.
-  // assuming you have a progress element on your dom
-  var progressBar = document.querySelector('progress');
-  xhr.upload.onprogress = function(e) {
-    if (e.lengthComputable) {
-      progressBar.value = (e.loaded / e.total) * 100;
-      progressBar.textContent = progressBar.value; // Fallback for unsupported browsers.
-    }
-  };
-
-  xhr.send(blobOrFile);*/
 }
 
 

@@ -3,6 +3,9 @@ logs
 *.log
 npm-debug.log*
 
+# Old source
+**/**/.old
+
 # Runtime data
 pids
 *.pid
